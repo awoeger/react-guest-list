@@ -5,7 +5,7 @@ import Header from './Header';
 
 function App() {
   // Fetching the data from guest list API
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState([]);
   const baseUrl = 'http://localhost:5000';
 
   useEffect(() => {
@@ -24,18 +24,27 @@ function App() {
     setFirstName(event.currentTarget.value);
   const handleLastNameChange = (event) =>
     setLastName(event.currentTarget.value);
-  // Add Button EventHandler
 
-  const addGuest = (firstName) => {
-    let copy = [...userData];
-    copy = [...userData, firstName];
-    console.log(copy);
-    setUserData(copy);
-  };
+  // Creating a new guest
+  async function createNewGuest() {
+    const response = await fetch('http://localhost:5000/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+      }),
+    });
+    const createdGuest = await response.json();
+    console.log(createdGuest);
+  }
 
   const handleAddClick = () => {
-    addGuest(firstName);
-    setFirstName('');
+    setFirstName(firstName);
+    setLastName(lastName);
+    createNewGuest();
   };
 
   return (
@@ -49,9 +58,13 @@ function App() {
         handleAddClick={handleAddClick}
       />
       <ul>
-        {userData.map((guest) => (
-          <li key={userData.id}>{guest}</li>
-        ))}
+        {userData.map((guest) => {
+          return (
+            <li key={guest.id}>
+              {`${guest.id} - ${guest.firstName} ${guest.lastName}`}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

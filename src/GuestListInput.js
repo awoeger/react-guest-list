@@ -8,7 +8,7 @@ export default function GuestListInput({
   handleAddClick,
 }) {
   return (
-    <div>
+    <form>
       <input
         placeholder="First Name"
         value={firstName}
@@ -19,9 +19,9 @@ export default function GuestListInput({
         value={lastName}
         onChange={handleLastNameChange}
       />
-      <button onClick={handleAddClick} type="button">
+      <button onClick={handleAddClick} type="submit">
         Add
       </button>
-    </div>
+    </form>
   );
 }
