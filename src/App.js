@@ -19,7 +19,8 @@ function App() {
   // Elements for GuestListInput.js
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  // onChange EventHandler
+
+  // onChange EventHandler for Input.js
   const handleFirstNameChange = (event) =>
     setFirstName(event.currentTarget.value);
   const handleLastNameChange = (event) =>
@@ -47,6 +48,37 @@ function App() {
     createNewGuest();
   };
 
+  //  Edit Guest
+  async function editGuest(id, isAttending) {
+    const response = await fetch(`${baseUrl}/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ attending: isAttending }),
+    });
+    const updatedGuest = await response.json();
+    console.log(updatedGuest);
+  }
+
+  const handleEditClick = (id, guestAttending) => {
+    if (!guestAttending) {
+      editGuest(id, true);
+    } else {
+      editGuest(id, false);
+    }
+  };
+
+  // Delete Guest
+  async function deleteGuest(id) {
+    const response = await fetch(`${baseUrl}/${id}`, { method: 'DELETE' });
+    const deletedGuest = await response.json();
+  }
+
+  const handleDeleteClick = (id) => {
+    deleteGuest(id);
+  };
+
   return (
     <div>
       <Header />
@@ -57,15 +89,29 @@ function App() {
         handleLastNameChange={handleLastNameChange}
         handleAddClick={handleAddClick}
       />
-      <ul>
-        {userData.map((guest) => {
-          return (
-            <li key={guest.id}>
-              {`${guest.id} - ${guest.firstName} ${guest.lastName}`}
-            </li>
-          );
-        })}
-      </ul>
+      <form>
+        <ul>
+          {userData.map((guest) => {
+            return (
+              <li key={guest.id}>
+                {`${guest.firstName} ${guest.lastName} ${guest.attending}`}
+                <button
+                  type="submit"
+                  onClick={() => handleEditClick(guest.id, guest.attending)}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteClick(guest.id)}
+                  type="submit"
+                >
+                  Delete
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </form>
     </div>
   );
 }

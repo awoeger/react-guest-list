@@ -9,13 +9,17 @@ export default function GuestListInput({
 }) {
   return (
     <form>
+      <label htmlFor="firstName">First Name</label>
       <input
-        placeholder="First Name"
+        id="firstName"
+        placeholder="Karl"
         value={firstName}
         onChange={handleFirstNameChange}
       />
+      <label htmlFor="lastName">Last Name</label>
       <input
-        placeholder="Last Name"
+        id="lastName"
+        placeholder="McKarlson"
         value={lastName}
         onChange={handleLastNameChange}
       />
