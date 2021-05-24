@@ -11,6 +11,7 @@ function App() {
   const [lastName, setLastName] = useState('');
   // Fetching the data from guest list API
   const [userData, setUserData] = useState([]);
+  const [filteredUserData, setFilteredUserData] = useState(userData);
   const baseUrl = 'http://localhost:5000';
 
   useEffect(() => {
@@ -18,6 +19,8 @@ function App() {
       const response = await fetch(`${baseUrl}/`);
       setUserData(await response.json());
     }
+    setFilteredUserData(userData);
+    console.log(userData);
     fetchUserData();
   }, []);
 
@@ -88,13 +91,19 @@ function App() {
   };
 
   // States and EventHandlers for Filters
-  const [selector, setSelector] = useState('');
+  // !Creating filteredUserData as copy of userData to not mutate userData everytime we filter
+  // !From now on only use userData when working with the API, when we want to display something use filteredUserData
+  // Todo: Show entire list when reloading the page
 
   const handleSelectChange = (event) => {
-    setSelector(event.currentTarget.value);
-    if (selector === 'all') {
-    } else if (selector === 'Attending') {
+    if (event.target.value === 'Attending') {
+      setFilteredUserData(userData.filter((guest) => guest.attending === true));
+    } else if (event.target.value === 'nonAttending') {
+      setFilteredUserData(
+        userData.filter((guest) => guest.attending === false),
+      );
     } else {
+      setFilteredUserData(userData);
     }
   };
 
@@ -110,7 +119,7 @@ function App() {
       />
       <form>
         <ul>
-          {userData.map((guest) => {
+          {filteredUserData.map((guest) => {
             return (
               <li key={guest.id}>
                 {`${guest.firstName} ${guest.lastName} ${guest.attending}`}
@@ -134,9 +143,9 @@ function App() {
           <option value="" disabled selected hidden>
             Filter your guests
           </option>
-          <option value={selector}>All</option>
-          <option value={selector}>Attending</option>
-          <option value={selector}>Non attending</option>
+          <option value="all">All</option>
+          <option value="Attending">Attending</option>
+          <option value="nonAttending">Non attending</option>
         </select>
       </form>
     </div>
