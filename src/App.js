@@ -1,9 +1,14 @@
 import './App.css';
+import './FontawesomeIcons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import GuestListInput from './GuestListInput';
 import Header from './Header';
 
 function App() {
+  // Elements for GuestListInput.js
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   // Fetching the data from guest list API
   const [userData, setUserData] = useState([]);
   const baseUrl = 'http://localhost:5000';
@@ -16,9 +21,12 @@ function App() {
     fetchUserData();
   }, []);
 
-  // Elements for GuestListInput.js
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  // ToDo: Create download... message while fetching data from server for the first time
+  // !.length is not working right now, because it then shows dowloading, when list is empty as well
+  // if (userData.length < 1) {
+  //   console.log(userData);
+  //   return <>Loading...</>;
+  // ToDo: Create download... End
 
   // onChange EventHandler for Input.js
   const handleFirstNameChange = (event) =>
@@ -79,6 +87,17 @@ function App() {
     deleteGuest(id);
   };
 
+  // States and EventHandlers for Filters
+  const [selector, setSelector] = useState('');
+
+  const handleSelectChange = (event) => {
+    setSelector(event.currentTarget.value);
+    if (selector === 'all') {
+    } else if (selector === 'Attending') {
+    } else {
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -105,12 +124,20 @@ function App() {
                   onClick={() => handleDeleteClick(guest.id)}
                   type="submit"
                 >
-                  Delete
+                  <FontAwesomeIcon icon="trash" />
                 </button>
               </li>
             );
           })}
         </ul>
+        <select onChange={handleSelectChange} id="filters">
+          <option value="" disabled selected hidden>
+            Filter your guests
+          </option>
+          <option value={selector}>All</option>
+          <option value={selector}>Attending</option>
+          <option value={selector}>Non attending</option>
+        </select>
       </form>
     </div>
   );
