@@ -19,8 +19,6 @@ function App() {
       const response = await fetch(`${baseUrl}/`);
       setUserData(await response.json());
     }
-    setFilteredUserData(userData);
-    console.log(userData);
     fetchUserData();
   }, []);
 
@@ -110,44 +108,53 @@ function App() {
   return (
     <div>
       <Header />
-      <GuestListInput
-        firstName={firstName}
-        lastName={lastName}
-        handleFirstNameChange={handleFirstNameChange}
-        handleLastNameChange={handleLastNameChange}
-        handleAddClick={handleAddClick}
-      />
-      <form>
-        <ul>
-          {filteredUserData.map((guest) => {
-            return (
-              <li key={guest.id}>
-                {`${guest.firstName} ${guest.lastName} ${guest.attending}`}
-                <button
-                  type="submit"
-                  onClick={() => handleEditClick(guest.id, guest.attending)}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteClick(guest.id)}
-                  type="submit"
-                >
-                  <FontAwesomeIcon icon="trash" />
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-        <select onChange={handleSelectChange} id="filters">
-          <option value="" disabled selected hidden>
-            Filter your guests
-          </option>
-          <option value="all">All</option>
-          <option value="Attending">Attending</option>
-          <option value="nonAttending">Non attending</option>
-        </select>
-      </form>
+      <div className="listOuterContainer">
+        <div className="listInnerContainer">
+          <GuestListInput
+            firstName={firstName}
+            lastName={lastName}
+            handleFirstNameChange={handleFirstNameChange}
+            handleLastNameChange={handleLastNameChange}
+            handleAddClick={handleAddClick}
+          />
+          <form className="guestListContainer">
+            <ol>
+              {filteredUserData.map((guest) => {
+                return (
+                  <div className="guestListInnerContainer" key={guest.id}>
+                    {`${guest.firstName} ${guest.lastName} ${guest.attending}`}
+                    <div className="listButtons">
+                      <button
+                        type="submit"
+                        onClick={() =>
+                          handleEditClick(guest.id, guest.attending)
+                        }
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="deleteButton"
+                        onClick={() => handleDeleteClick(guest.id)}
+                        type="submit"
+                      >
+                        <FontAwesomeIcon icon="trash" color="white" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </ol>
+          </form>
+          <select onChange={handleSelectChange} id="filters">
+            <option value="" disabled selected hidden>
+              Filter your guests
+            </option>
+            <option value="all">All</option>
+            <option value="Attending">Attending</option>
+            <option value="nonAttending">Non attending</option>
+          </select>
+        </div>
+      </div>
     </div>
   );
 }

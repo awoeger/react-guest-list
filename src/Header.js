@@ -1,12 +1,17 @@
-import React from 'react';
+import GuestifyFont from './images/GuestifyFont.PNG';
+import Logosmall from './images/Logosmall.PNG';
 
 export default function Header() {
   return (
-    <div>
-      <img alt="Logo" />
-      <h1>Guestify</h1>
-      <p>Handle your events</p>
-      <p>and your guests</p>
+    <div className="header">
+      <div className="headerDivLeft">
+        <img className="logosmall" src={Logosmall} alt="Logo" />
+        <img src={GuestifyFont} alt="Guestify" />
+      </div>
+      <div className="headerDivRight">
+        {/* <p>Handle your events</p> */}
+        <div className="typing-demo">Handle your events...and your guests</div>
+      </div>
     </div>
   );
 }
