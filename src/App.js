@@ -10,24 +10,26 @@ function App() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   // Fetching the data from guest list API
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState();
   const [filteredUserData, setFilteredUserData] = useState(userData);
   const baseUrl = 'http://localhost:5000';
 
+  // const getFilteredUserData = setFilteredUserData(userData);
+  console.log(filteredUserData);
   useEffect(() => {
     async function fetchUserData() {
       const response = await fetch(`${baseUrl}/`);
-      setUserData(await response.json());
+      const res = await response.json();
+      setUserData(res);
+      setFilteredUserData(res);
     }
     fetchUserData();
   }, []);
 
-  // ToDo: Create download... message while fetching data from server for the first time
-  // !.length is not working right now, because it then shows dowloading, when list is empty as well
-  // if (userData.length < 1) {
-  //   console.log(userData);
-  //   return <>Loading...</>;
-  // ToDo: Create download... End
+  if (!filteredUserData) {
+    console.log(userData);
+    return <>Loading...</>;
+  }
 
   // onChange EventHandler for Input.js
   const handleFirstNameChange = (event) =>
