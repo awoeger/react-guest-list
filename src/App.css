@@ -119,6 +119,10 @@ h2 {
   display: flex;
   justify-content: center;
   margin-top: 3em;
+  display: flex;
+  margin-top: 3em;
+  flex-direction: column;
+  align-items: center;
 }
 
 .guestListInnerContainer {
@@ -134,4 +138,23 @@ h2 {
   width: 5%;
   padding: 10px;
   margin: 10px;
+}
+
+.attendingTrue {
+  background-color: green;
+}
+
+.attendingFalse {
+  background-color: red;
+}
+
+select {
+  font-size: 1.3em;
+  padding: 10px;
+  margin-bottom: 3em;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid;
+  color: #05062f;
 }

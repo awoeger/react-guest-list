@@ -28,7 +28,16 @@ function App() {
 
   if (!filteredUserData) {
     console.log(userData);
-    return <>Loading...</>;
+    return (
+      <div
+        style={{
+          color: 'white',
+          fontSize: '20px',
+        }}
+      >
+        Loading...
+      </div>
+    );
   }
 
   // onChange EventHandler for Input.js
@@ -91,10 +100,6 @@ function App() {
   };
 
   // States and EventHandlers for Filters
-  // !Creating filteredUserData as copy of userData to not mutate userData everytime we filter
-  // !From now on only use userData when working with the API, when we want to display something use filteredUserData
-  // Todo: Show entire list when reloading the page
-
   const handleSelectChange = (event) => {
     if (event.target.value === 'Attending') {
       setFilteredUserData(userData.filter((guest) => guest.attending === true));
@@ -104,6 +109,13 @@ function App() {
       );
     } else {
       setFilteredUserData(userData);
+    }
+  };
+
+  // Delete All EventHandler
+  const handleDeleteAllClick = () => {
+    for (let i = 0; i < userData.length; i++) {
+      deleteGuest(userData[i].id);
     }
   };
 
@@ -120,19 +132,36 @@ function App() {
             handleAddClick={handleAddClick}
           />
           <form className="guestListContainer">
-            <ol>
+            <select onChange={handleSelectChange} id="filters">
+              <option value="" disabled selected hidden>
+                Filter guests
+              </option>
+              <option value="all">All</option>
+              <option value="Attending">Attending</option>
+              <option value="nonAttending">Non attending</option>
+            </select>
+            <div>
               {filteredUserData.map((guest) => {
                 return (
                   <div className="guestListInnerContainer" key={guest.id}>
-                    {`${guest.firstName} ${guest.lastName} ${guest.attending}`}
+                    {`${guest.firstName} ${guest.lastName}`}
                     <div className="listButtons">
                       <button
+                        className={
+                          guest.attending === true
+                            ? 'attendingTrue'
+                            : 'attendingFalse'
+                        }
                         type="submit"
                         onClick={() =>
                           handleEditClick(guest.id, guest.attending)
                         }
                       >
-                        Edit
+                        {guest.attending === true ? (
+                          <FontAwesomeIcon icon="check" color="white" />
+                        ) : (
+                          <FontAwesomeIcon icon="times" color="white" />
+                        )}
                       </button>
                       <button
                         className="deleteButton"
@@ -145,16 +174,17 @@ function App() {
                   </div>
                 );
               })}
-            </ol>
+            </div>
           </form>
-          <select onChange={handleSelectChange} id="filters">
-            <option value="" disabled selected hidden>
-              Filter your guests
-            </option>
-            <option value="all">All</option>
-            <option value="Attending">Attending</option>
-            <option value="nonAttending">Non attending</option>
-          </select>
+          <form>
+            <button
+              className="deleteAllButton"
+              type="submit"
+              onClick={handleDeleteAllClick}
+            >
+              Delete all
+            </button>
+          </form>
         </div>
       </div>
     </div>

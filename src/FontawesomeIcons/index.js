@@ -1,4 +1,9 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheck,
+  faPlus,
+  faTimes,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 
-library.add(faTrash, faPlus);
+library.add(faTrash, faPlus, faCheck, faTimes);
