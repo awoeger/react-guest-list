@@ -12,7 +12,7 @@ function App() {
   // Fetching the data from guest list API
   const [userData, setUserData] = useState();
   const [filteredUserData, setFilteredUserData] = useState(userData);
-  const baseUrl = 'http://localhost:5000';
+  const baseUrl = 'https://guest-list-aw.herokuapp.com';
 
   // const getFilteredUserData = setFilteredUserData(userData);
   console.log(filteredUserData);
@@ -27,7 +27,6 @@ function App() {
   }, []);
 
   if (!filteredUserData) {
-    console.log(userData);
     return (
       <div
         style={{
@@ -48,7 +47,7 @@ function App() {
 
   // Creating a new guest
   async function createNewGuest() {
-    const response = await fetch('http://localhost:5000/', {
+    const response = await fetch(`${baseUrl}/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +58,9 @@ function App() {
       }),
     });
     const createdGuest = await response.json();
-    console.log(createdGuest);
+    const stateCopy = [...filteredUserData];
+    stateCopy.push(createdGuest);
+    setFilteredUserData(stateCopy);
   }
 
   const handleAddClick = () => {
@@ -78,7 +79,13 @@ function App() {
       body: JSON.stringify({ attending: isAttending }),
     });
     const updatedGuest = await response.json();
-    console.log(updatedGuest);
+    const copyGuest = [...filteredUserData];
+    const foundGuest = copyGuest.find(
+      (findGuest) => findGuest.id === updatedGuest.id,
+    );
+    foundGuest.attending = isAttending;
+    console.log(foundGuest);
+    // setFilteredUserData(foundGuest);
   }
 
   const handleEditClick = (id, guestAttending) => {
@@ -93,6 +100,9 @@ function App() {
   async function deleteGuest(id) {
     const response = await fetch(`${baseUrl}/${id}`, { method: 'DELETE' });
     const deletedGuest = await response.json();
+    setFilteredUserData(
+      filteredUserData.filter((delGuest) => delGuest.id !== deletedGuest.id),
+    );
   }
 
   const handleDeleteClick = (id) => {
@@ -122,68 +132,75 @@ function App() {
   return (
     <div>
       <Header />
-      <div className="listOuterContainer">
-        <div className="listInnerContainer">
-          <GuestListInput
-            firstName={firstName}
-            lastName={lastName}
-            handleFirstNameChange={handleFirstNameChange}
-            handleLastNameChange={handleLastNameChange}
-            handleAddClick={handleAddClick}
-          />
-          <form className="guestListContainer">
-            <select onChange={handleSelectChange} id="filters">
-              <option value="" disabled selected hidden>
-                Filter guests
-              </option>
-              <option value="all">All</option>
-              <option value="Attending">Attending</option>
-              <option value="nonAttending">Non attending</option>
-            </select>
-            <div className="guestListSubContainer">
-              {filteredUserData.map((guest) => {
-                return (
-                  <div className="guestListInnerContainer" key={guest.id}>
-                    <button
-                      className="deleteButton"
-                      onClick={() => handleDeleteClick(guest.id)}
-                      type="submit"
-                    >
-                      <FontAwesomeIcon icon="trash" color="white" />
-                    </button>
-                    <button
-                      className={
-                        guest.attending === true
-                          ? 'attendingTrue'
-                          : 'attendingFalse'
-                      }
-                      type="submit"
-                      onClick={() => handleEditClick(guest.id, guest.attending)}
-                    >
-                      {guest.attending === true ? (
-                        <FontAwesomeIcon icon="check" color="white" />
-                      ) : (
-                        <FontAwesomeIcon icon="times" color="white" />
-                      )}
-                    </button>
-                    {`${guest.firstName} ${guest.lastName}`}
-                  </div>
-                );
-              })}
-            </div>
-          </form>
-          <form className={userData.length > 1 ? 'deleteAll' : 'none'}>
-            <button
-              className="deleteAllButton"
-              type="submit"
-              onClick={handleDeleteAllClick}
+      <main>
+        <div className="listOuterContainer">
+          <div className="listInnerContainer">
+            <GuestListInput
+              firstName={firstName}
+              lastName={lastName}
+              handleFirstNameChange={handleFirstNameChange}
+              handleLastNameChange={handleLastNameChange}
+              handleAddClick={handleAddClick}
+            />
+            <form
+              onSubmit={(event) => event.preventDefault()}
+              className="guestListContainer"
             >
-              <FontAwesomeIcon icon="trash" color="white" />
-              {` Delete all`}
-            </button>
-          </form>
+              <select onChange={handleSelectChange} id="filters">
+                <option value="" disabled selected hidden>
+                  Filter guests
+                </option>
+                <option value="all">All</option>
+                <option value="Attending">Attending</option>
+                <option value="nonAttending">Non attending</option>
+              </select>
+              <div className="guestListSubContainer">
+                {filteredUserData.map((guest) => {
+                  return (
+                    <div className="guestListInnerContainer" key={guest.id}>
+                      <button
+                        className="deleteButton"
+                        onClick={() => handleDeleteClick(guest.id)}
+                        type="submit"
+                      >
+                        <FontAwesomeIcon icon="trash" color="white" />
+                      </button>
+                      <button
+                        className={
+                          guest.attending === true
+                            ? 'attendingTrue'
+                            : 'attendingFalse'
+                        }
+                        type="submit"
+                        onClick={() =>
+                          handleEditClick(guest.id, guest.attending)
+                        }
+                      >
+                        {guest.attending === true ? (
+                          <FontAwesomeIcon icon="check" color="white" />
+                        ) : (
+                          <FontAwesomeIcon icon="times" color="white" />
+                        )}
+                      </button>
+                      {`${guest.firstName} ${guest.lastName}`}
+                    </div>
+                  );
+                })}
+              </div>
+            </form>
+            <form className={userData.length > 1 ? 'deleteAll' : 'none'}>
+              <button
+                className="deleteAllButton"
+                type="submit"
+                onClick={handleDeleteAllClick}
+              >
+                <FontAwesomeIcon icon="trash" color="white" />
+                {` Delete all`}
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function GuestListInput({
   handleAddClick,
 }) {
   return (
-    <form>
+    <form onSubmit={(event) => event.preventDefault()}>
       <h1>GUESTIFY YOUR EVENT</h1>
       <h2>Enter guests</h2>
       <div className="InputDiv">
