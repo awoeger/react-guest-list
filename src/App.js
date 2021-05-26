@@ -140,49 +140,46 @@ function App() {
               <option value="Attending">Attending</option>
               <option value="nonAttending">Non attending</option>
             </select>
-            <div>
+            <div className="guestListSubContainer">
               {filteredUserData.map((guest) => {
                 return (
                   <div className="guestListInnerContainer" key={guest.id}>
+                    <button
+                      className="deleteButton"
+                      onClick={() => handleDeleteClick(guest.id)}
+                      type="submit"
+                    >
+                      <FontAwesomeIcon icon="trash" color="white" />
+                    </button>
+                    <button
+                      className={
+                        guest.attending === true
+                          ? 'attendingTrue'
+                          : 'attendingFalse'
+                      }
+                      type="submit"
+                      onClick={() => handleEditClick(guest.id, guest.attending)}
+                    >
+                      {guest.attending === true ? (
+                        <FontAwesomeIcon icon="check" color="white" />
+                      ) : (
+                        <FontAwesomeIcon icon="times" color="white" />
+                      )}
+                    </button>
                     {`${guest.firstName} ${guest.lastName}`}
-                    <div className="listButtons">
-                      <button
-                        className={
-                          guest.attending === true
-                            ? 'attendingTrue'
-                            : 'attendingFalse'
-                        }
-                        type="submit"
-                        onClick={() =>
-                          handleEditClick(guest.id, guest.attending)
-                        }
-                      >
-                        {guest.attending === true ? (
-                          <FontAwesomeIcon icon="check" color="white" />
-                        ) : (
-                          <FontAwesomeIcon icon="times" color="white" />
-                        )}
-                      </button>
-                      <button
-                        className="deleteButton"
-                        onClick={() => handleDeleteClick(guest.id)}
-                        type="submit"
-                      >
-                        <FontAwesomeIcon icon="trash" color="white" />
-                      </button>
-                    </div>
                   </div>
                 );
               })}
             </div>
           </form>
-          <form>
+          <form className={userData.length > 1 ? 'deleteAll' : 'none'}>
             <button
               className="deleteAllButton"
               type="submit"
               onClick={handleDeleteAllClick}
             >
-              Delete all
+              <FontAwesomeIcon icon="trash" color="white" />
+              {` Delete all`}
             </button>
           </form>
         </div>
