@@ -4,7 +4,8 @@ body {
   padding: 0px;
   min-height: 100vh;
   min-width: 100vw;
-  background-color: #05062f;
+  /* background-color: #05062f; */
+  background: linear-gradient(75deg, #050627, #0a0d4b);
   overflow-x: hidden;
 }
 
