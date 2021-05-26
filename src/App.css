@@ -5,7 +5,7 @@ body {
   min-height: 100vh;
   min-width: 100vw;
   /* background-color: #05062f; */
-  background: linear-gradient(75deg, #050627, #0a0d4b);
+  background: linear-gradient(65deg, #050627, #05062f, #0b0f61);
   overflow-x: hidden;
 }
 
@@ -187,7 +187,7 @@ h2 {
   border: none;
   border-radius: 2px;
   width: 5%;
-  padding: 10px;
+  padding: 10px 12px;
   margin: 10px;
   inline-size: fit-content;
 }
@@ -239,5 +239,25 @@ select {
 
 .deleteAllButton:active {
   background-color: rgb(255, 56, 56);
+  transform: translateY(4px);
+}
+
+.editNameButton {
+  width: 15%;
+  background-color: rgb(3, 195, 243);
+  border: none;
+  border-radius: 2px;
+  padding: 6px 3px;
+  margin: 10px 15px 10px 10px;
+  color: white;
+  font-size: 20px;
+}
+
+.editNameButton:hover {
+  background-color: rgb(58, 213, 251);
+}
+
+.editNameButton:active {
+  background-color: rgb(58, 213, 251);
   transform: translateY(4px);
 }

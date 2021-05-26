@@ -166,6 +166,9 @@ function App() {
                         <FontAwesomeIcon icon="times" color="white" />
                       )}
                     </button>
+                    <button className="editNameButton" type="submit">
+                      <FontAwesomeIcon size="xs" icon="edit" color="white" />
+                    </button>
                     {`${guest.firstName} ${guest.lastName}`}
                   </div>
                 );
