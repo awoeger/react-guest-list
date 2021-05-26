@@ -6,7 +6,7 @@ export default function Header() {
     <div className="header">
       <div className="headerDivLeft">
         <img className="logosmall" src={Logosmall} alt="Logo" />
-        <img src={GuestifyFont} alt="Guestify" />
+        <img className="logoWriting" src={GuestifyFont} alt="Guestify" />
       </div>
       <div className="headerDivRight">
         {/* <p>Handle your events</p> */}

@@ -6,6 +6,8 @@ body {
   min-width: 100vw;
   /* background-color: #05062f; */
   background: linear-gradient(65deg, #050627, #05062f, #0b0f61);
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow-x: hidden;
 }
 
@@ -20,6 +22,10 @@ body {
 
 .logosmall {
   max-width: 25%;
+}
+
+.logoWriting {
+  max-width: 50%;
 }
 
 .headerDivLeft {
@@ -90,6 +96,7 @@ h2 {
   flex-direction: row;
   justify-content: center;
   margin-top: 3em;
+  align-items: center;
 }
 
 .InputDiv input {
@@ -242,22 +249,154 @@ select {
   transform: translateY(4px);
 }
 
-.editNameButton {
-  width: 15%;
-  background-color: rgb(3, 195, 243);
-  border: none;
-  border-radius: 2px;
-  padding: 6px 3px;
-  margin: 10px 15px 10px 10px;
-  color: white;
-  font-size: 20px;
+/* Media Queries */
+@media only screen and (max-width: 1024px) {
+  .logosmall {
+    max-width: 20%;
+  }
+
+  .logoWriting {
+    max-width: 40%;
+  }
+
+  .headerDivRight {
+    font-size: 8px;
+  }
+
+  .listOuterContainer {
+    margin: 40px 35px 30px 30px;
+  }
+
+  h1 {
+    font-size: 2.5em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  .InputDiv label {
+    font-size: 1.2em;
+  }
+
+  .InputDiv input {
+    font-size: 1.2em;
+  }
+
+  select {
+    font-size: 1.2em;
+  }
 }
 
-.editNameButton:hover {
-  background-color: rgb(58, 213, 251);
+@media only screen and (max-width: 902px) {
+  h1 {
+    font-size: 2.3em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  .InputDiv label {
+    font-size: 1.1em;
+  }
+
+  .InputDiv input {
+    font-size: 1.1em;
+  }
+
+  select {
+    font-size: 1.1em;
+  }
+
+  .listOuterContainer {
+    margin: 40px 15px 30px 30px;
+  }
 }
 
-.editNameButton:active {
-  background-color: rgb(58, 213, 251);
-  transform: translateY(4px);
+@media only screen and (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .headerDivRight {
+    font-size: 10px;
+  }
+
+  .InputDiv {
+    flex-direction: column;
+    margin-top: 30px;
+  }
+
+  .InputDiv label {
+    padding-bottom: 15px;
+  }
+
+  .InputDiv input {
+    margin-bottom: 15px;
+  }
+
+  .addButton {
+    width: 6%;
+  }
+
+  .deleteAllButton {
+    width: 20%;
+  }
+}
+
+@media only screen and (max-width: 426px) {
+  .logoWriting {
+    min-width: 50%;
+  }
+
+  .logosmall {
+    min-width: 30%;
+  }
+
+  .header {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .headerDivRight {
+    font-size: 7px;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  .InputDiv label {
+    font-size: 1em;
+  }
+
+  .InputDiv input {
+    font-size: 1em;
+  }
+
+  select {
+    font-size: 1em;
+  }
+
+  .addButton {
+    width: 9%;
+  }
+
+  .deleteAllButton {
+    width: 40%;
+  }
+
+  .listOuterContainer {
+    margin: 40px 20px 30px 30px;
+  }
+
+  .guestListInnerContainer {
+    font-size: 1.1em;
+  }
 }
