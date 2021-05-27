@@ -61,6 +61,7 @@ function App() {
     const stateCopy = [...filteredUserData];
     stateCopy.push(createdGuest);
     setFilteredUserData(stateCopy);
+    setUserData(stateCopy);
   }
 
   const handleAddClick = () => {
@@ -84,8 +85,9 @@ function App() {
       (findGuest) => findGuest.id === updatedGuest.id,
     );
     foundGuest.attending = isAttending;
-    console.log(foundGuest);
-    // setFilteredUserData(foundGuest);
+
+    setFilteredUserData(copyGuest);
+    setUserData(copyGuest);
   }
 
   const handleEditClick = (id, guestAttending) => {
@@ -103,6 +105,9 @@ function App() {
     setFilteredUserData(
       filteredUserData.filter((delGuest) => delGuest.id !== deletedGuest.id),
     );
+    setUserData(
+      filteredUserData.filter((delGuest) => delGuest.id !== deletedGuest.id),
+    );
   }
 
   const handleDeleteClick = (id) => {
@@ -111,6 +116,7 @@ function App() {
 
   // States and EventHandlers for Filters
   const handleSelectChange = (event) => {
+    console.log(event.target);
     if (event.target.value === 'Attending') {
       setFilteredUserData(userData.filter((guest) => guest.attending === true));
     } else if (event.target.value === 'nonAttending') {
