@@ -153,9 +153,7 @@ function App() {
               className="guestListContainer"
             >
               <select onChange={handleSelectChange} id="filters">
-                <option value="" disabled selected hidden>
-                  Filter guests
-                </option>
+                <option value="DEFAULT">Filter guests</option>
                 <option value="all">All</option>
                 <option value="Attending">Attending</option>
                 <option value="nonAttending">Non attending</option>
