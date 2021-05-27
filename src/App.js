@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import './App.css';
 import './FontawesomeIcons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
